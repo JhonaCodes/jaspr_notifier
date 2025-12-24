@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:jaspr/client.dart';
+import 'package:jaspr/jaspr.dart';
 import 'package:jaspr_notifier/src/helper/helper_notifier.dart';
 import 'package:jaspr_notifier/src/notifier/reactive_notifier.dart';
 import 'package:jaspr_notifier/src/context/viewmodel_context_notifier.dart';

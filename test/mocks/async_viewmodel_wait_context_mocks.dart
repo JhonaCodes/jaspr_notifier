@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:jaspr_notifier/jaspr_notifier.dart';
-import 'package:jaspr_test/client_test.dart';
 
 /// Test AsyncViewModel implementation for testing waitForContext functionality
 class TestWaitForContextViewModel extends AsyncViewModelImpl<String> {

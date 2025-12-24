@@ -32,7 +32,7 @@ Add to your `pubspec.yaml`:
 ```yaml
 dependencies:
   jaspr: ^0.22.0
-  jaspr_notifier: ^1.0.0
+  jaspr_notifier: ^1.0.1
 ```
 
 ## Quick Start

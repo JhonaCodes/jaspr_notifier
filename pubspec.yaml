@@ -1,7 +1,7 @@
 name: jaspr_notifier
 description: Jaspr state management with MVVM-inspired ViewModels & Notifiers. Port of reactive_notifier for Jaspr framework.
 
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/JhonaCodes/jaspr_notifier.git
 repository: https://github.com/JhonaCodes/jaspr_notifier.git
 issue_tracker: https://github.com/JhonaCodes/jaspr_notifier/issues

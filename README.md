@@ -343,6 +343,8 @@ counter.listen((value) {
 counter.stopListening();
 ```
 
+See [Inter-ViewModel Communication](doc/inter_viewmodel_communication.md) for a comprehensive guide on ViewModels communicating with each other.
+
 ### Cleanup
 
 Clean up all ViewModels and notifiers:

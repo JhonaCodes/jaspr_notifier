@@ -73,7 +73,7 @@ class CounterPage extends StatelessComponent {
   Component build(BuildContext context) {
     return ReactiveBuilder<int>(
       notifier: CounterService.instance,
-      builder: (count, keep) {
+      build: (count, notifier, keep) {
         return div([
           Component.text('Count: $count'),
           button(
@@ -128,7 +128,7 @@ mixin CounterService {
 // Usage
 ReactiveBuilder<int>(
   notifier: CounterService.instance,
-  builder: (count, keep) => Component.text('$count'),
+  build: (count, notifier, keep) => Component.text('$count'),
 )
 
 // Call methods
@@ -162,7 +162,7 @@ class UserViewModel extends ViewModel<User> {
 // Usage
 ReactiveViewModelBuilder<UserViewModel, User>(
   viewmodel: UserViewModel.instance,
-  builder: (user, vm, keep) => Component.text(user.name),
+  build: (user, vm, keep) => Component.text(user.name),
 )
 
 // Call methods
@@ -214,7 +214,7 @@ class UserViewModel extends AsyncViewModelImpl<User> {
 ```dart
 ReactiveBuilder<String>(
   notifier: messageNotifier,
-  builder: (message, keep) {
+  build: (message, notifier, keep) {
     return text(message);
   },
 )
@@ -224,7 +224,7 @@ ReactiveBuilder<String>(
 ```dart
 ReactiveViewModelBuilder<ThemeViewModel, ThemeMode>(
   viewmodel: ThemeViewModel.instance,
-  builder: (theme, vm, keep) {
+  build: (theme, vm, keep) {
     return div(classes: theme == ThemeMode.dark ? 'dark' : 'light', [
       button(
         onClick: (_) => vm.toggleTheme(),
@@ -298,7 +298,7 @@ Prevent expensive components from rebuilding:
 ```dart
 ReactiveBuilder<User>(
   notifier: userNotifier,
-  builder: (user, keep) {
+  build: (user, notifier, keep) {
     return div([
       // This won't rebuild when user changes
       keep(ExpensiveChart()),
@@ -359,7 +359,8 @@ If you're migrating from Flutter's reactive_notifier:
 2. **Widgets → Components** - All builders now return `Component` instead of `Widget`
 3. **Build Methods** - `Component build(BuildContext context)` instead of `Widget build`
 4. **HTML Elements** - Use `div([])`, `text()`, `button()` instead of Flutter widgets
-5. **No Changes** - ViewModel logic, state management, and patterns remain identical
+5. **Builder Parameters** - Rename `builder` to `build` (snyc) or `onData` (async) and check updated signatures
+6. **No Changes** - ViewModel logic, state management, and patterns remain identical
 
 ## Examples
 

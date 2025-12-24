@@ -195,9 +195,9 @@ class _ReactiveAsyncBuilderState<VM, T>
 ///   future: OrderService.instance.notifier.loadById(orderId),
 ///   defaultData: OrderService.instance.notifier.getByPid(orderId),
 ///   createStateNotifier: OrderService.currentOrderItem,
-///   onSuccess: (order) => ReactiveBuilder(
+///   onData: (order, keep) => ReactiveBuilder(
 ///     notifier: OrderService.currentOrderItem,
-///     builder: (orderData, _) {
+///     build: (orderData, notifier, keep) {
 ///       if (orderData == null) {
 ///         return const Text('Not found');
 ///       }

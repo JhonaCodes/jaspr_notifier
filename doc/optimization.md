@@ -7,7 +7,7 @@
 In all builders (`ReactiveBuilder`, etc.), a `keep` function is provided.
 
 ```dart
-(state, keep) => ...
+(state, notifier, keep) => ...
 ```
 
 This function wraps a Component in a `NoRebuildWrapper`. It tells Jaspr to preserve the existing component instance if it hasn't changed, bypassing the build phase for that subtree.
@@ -22,7 +22,7 @@ This function wraps a Component in a `NoRebuildWrapper`. It tells Jaspr to prese
 ```dart
 ReactiveBuilder<int>(
   notifier: counter,
-  builder: (count, keep) {
+  build: (count, notifier, keep) {
     return div([
       text('Count: $count'), // Rebuilds when count changes
       

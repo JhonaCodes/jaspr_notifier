@@ -11,7 +11,7 @@ class TestAsyncViewModel extends AsyncViewModelImpl<String> {
   String? lastOnResumeData;
 
   TestAsyncViewModel({required this.initialData, bool loadOnInit = true})
-      : super(AsyncState.initial(), loadOnInit: loadOnInit);
+    : super(AsyncState.initial(), loadOnInit: loadOnInit);
 
   @override
   Future<String> init() async {
@@ -20,15 +20,17 @@ class TestAsyncViewModel extends AsyncViewModelImpl<String> {
   }
 
   @override
-  Future<void> setupListeners(
-      {List<String> currentListeners = const []}) async {
+  Future<void> setupListeners({
+    List<String> currentListeners = const [],
+  }) async {
     setupListenersCallCount++;
     await super.setupListeners(currentListeners: currentListeners);
   }
 
   @override
-  Future<void> removeListeners(
-      {List<String> currentListeners = const []}) async {
+  Future<void> removeListeners({
+    List<String> currentListeners = const [],
+  }) async {
     removeListenersCallCount++;
     await super.removeListeners(currentListeners: currentListeners);
   }
@@ -42,36 +44,36 @@ class TestAsyncViewModel extends AsyncViewModelImpl<String> {
 
   // Test helpers to inspect state
   bool isInitial() => match<bool>(
-        initial: () => true,
-        loading: () => false,
-        success: (_) => false,
-        empty: () => false,
-        error: (_, __) => false,
-      );
+    initial: () => true,
+    loading: () => false,
+    success: (_) => false,
+    empty: () => false,
+    error: (_, __) => false,
+  );
 
   bool isSuccess() => match<bool>(
-        initial: () => false,
-        loading: () => false,
-        success: (_) => true,
-        empty: () => false,
-        error: (_, __) => false,
-      );
+    initial: () => false,
+    loading: () => false,
+    success: (_) => true,
+    empty: () => false,
+    error: (_, __) => false,
+  );
 
   bool isEmpty() => match<bool>(
-        initial: () => false,
-        loading: () => false,
-        success: (_) => false,
-        empty: () => true,
-        error: (_, __) => false,
-      );
+    initial: () => false,
+    loading: () => false,
+    success: (_) => false,
+    empty: () => true,
+    error: (_, __) => false,
+  );
 
   bool isError() => match<bool>(
-        initial: () => false,
-        loading: () => false,
-        success: (_) => false,
-        empty: () => false,
-        error: (_, __) => true,
-      );
+    initial: () => false,
+    loading: () => false,
+    success: (_) => false,
+    empty: () => false,
+    error: (_, __) => true,
+  );
 
   // Helper to set state for testing (using existing public methods)
   void testSetEmptyState() {
@@ -94,7 +96,7 @@ class SlowAsyncViewModel extends AsyncViewModelImpl<String> {
   Timer? _delayTimer;
 
   SlowAsyncViewModel({this.delay = 50, bool loadOnInit = true})
-      : super(AsyncState.initial(), loadOnInit: loadOnInit);
+    : super(AsyncState.initial(), loadOnInit: loadOnInit);
 
   @override
   Future<String> init() async {
@@ -141,20 +143,21 @@ class ErrorAsyncViewModel extends AsyncViewModelImpl<String> {
   }
 
   @override
-  Future<void> setupListeners(
-      {List<String> currentListeners = const []}) async {
+  Future<void> setupListeners({
+    List<String> currentListeners = const [],
+  }) async {
     setupListenersCallCount++;
     await super.setupListeners(currentListeners: currentListeners);
   }
 
   // Test helper
   bool isError() => match<bool>(
-        initial: () => false,
-        loading: () => false,
-        success: (_) => false,
-        empty: () => false,
-        error: (_, __) => true,
-      );
+    initial: () => false,
+    loading: () => false,
+    success: (_) => false,
+    empty: () => false,
+    error: (_, __) => true,
+  );
 
   // Expose protected methods for testing
   void testLoadingState() {
@@ -169,9 +172,10 @@ class ErrorAsyncViewModel extends AsyncViewModelImpl<String> {
 class ConditionalErrorAsyncViewModel extends AsyncViewModelImpl<String> {
   bool shouldFail;
 
-  ConditionalErrorAsyncViewModel(
-      {this.shouldFail = false, bool loadOnInit = true})
-      : super(AsyncState.initial(), loadOnInit: loadOnInit);
+  ConditionalErrorAsyncViewModel({
+    this.shouldFail = false,
+    bool loadOnInit = true,
+  }) : super(AsyncState.initial(), loadOnInit: loadOnInit);
 
   @override
   Future<String> init() async {
@@ -183,20 +187,20 @@ class ConditionalErrorAsyncViewModel extends AsyncViewModelImpl<String> {
 
   // Test helpers
   bool isSuccess() => match<bool>(
-        initial: () => false,
-        loading: () => false,
-        success: (_) => true,
-        empty: () => false,
-        error: (_, __) => false,
-      );
+    initial: () => false,
+    loading: () => false,
+    success: (_) => true,
+    empty: () => false,
+    error: (_, __) => false,
+  );
 
   bool isError() => match<bool>(
-        initial: () => false,
-        loading: () => false,
-        success: (_) => false,
-        empty: () => false,
-        error: (_, __) => true,
-      );
+    initial: () => false,
+    loading: () => false,
+    success: (_) => false,
+    empty: () => false,
+    error: (_, __) => true,
+  );
 
   // Expose protected methods for testing
   void testLoadingState() {
@@ -212,7 +216,7 @@ class ListAsyncViewModel extends AsyncViewModelImpl<List<int>> {
   final List<int> initialData;
 
   ListAsyncViewModel({required this.initialData, bool loadOnInit = true})
-      : super(AsyncState.initial(), loadOnInit: loadOnInit);
+    : super(AsyncState.initial(), loadOnInit: loadOnInit);
 
   @override
   Future<List<int>> init() async {
@@ -221,12 +225,12 @@ class ListAsyncViewModel extends AsyncViewModelImpl<List<int>> {
 
   // Test helper
   bool isSuccess() => match<bool>(
-        initial: () => false,
-        loading: () => false,
-        success: (_) => true,
-        empty: () => false,
-        error: (_, __) => false,
-      );
+    initial: () => false,
+    loading: () => false,
+    success: (_) => true,
+    empty: () => false,
+    error: (_, __) => false,
+  );
 
   // Expose protected methods for testing
   void testLoadingState() {
@@ -243,7 +247,7 @@ class DependentAsyncViewModel extends AsyncViewModelImpl<String> {
   int sourceUpdateCount = 0;
 
   DependentAsyncViewModel({bool loadOnInit = true})
-      : super(AsyncState.initial(), loadOnInit: loadOnInit);
+    : super(AsyncState.initial(), loadOnInit: loadOnInit);
 
   @override
   Future<String> init() async {
@@ -252,7 +256,8 @@ class DependentAsyncViewModel extends AsyncViewModelImpl<String> {
 
   /// Setup reactive communication with source AsyncViewModel
   Future<AsyncState<String>> listenToSource(
-      TestAsyncViewModel sourceViewModel) {
+    TestAsyncViewModel sourceViewModel,
+  ) {
     return sourceViewModel.listenVM((sourceState) {
       sourceUpdateCount++;
       receivedSourceState = sourceState;

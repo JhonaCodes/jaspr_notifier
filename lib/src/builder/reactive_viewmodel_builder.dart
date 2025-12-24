@@ -30,7 +30,8 @@ class ReactiveViewModelBuilder<VM, T> extends StatefulComponent {
 
     /// Function used to wrap components that should remain stable across rebuilds.
     Component Function(Component child) keep,
-  ) build;
+  )
+  build;
 
   /// Constructor that ensures either notifier or viewmodel is provided
   const ReactiveViewModelBuilder({
@@ -143,7 +144,8 @@ class _ReactiveBuilderStateViewModel<VM, T>
 
     // Handle auto-dispose if applicable
     if (component.viewmodel is ReactiveNotifierViewModel) {
-      final reactiveViewModel = component.viewmodel as ReactiveNotifierViewModel;
+      final reactiveViewModel =
+          component.viewmodel as ReactiveNotifierViewModel;
       if (reactiveViewModel.autoDispose &&
           !reactiveViewModel.notifier.hasListeners) {
         reactiveViewModel.dispose();

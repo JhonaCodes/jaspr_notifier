@@ -29,7 +29,8 @@ class ReactiveBuilder<T> extends StatefulComponent {
     /// A wrapper that helps prevent unnecessary rebuilds.
     /// Wrap any component that should remain stable between state updates.
     Component Function(Component child) keep,
-  ) build;
+  )
+  build;
 
   const ReactiveBuilder({
     super.key,
@@ -54,8 +55,10 @@ class _ReactiveBuilderState<T> extends State<ReactiveBuilder<T>> {
     // Use unique identifier for each builder instance
     final notifierValue = component.notifier.notifier;
     final uniqueBuilderType = 'ReactiveBuilder<$T>_$hashCode';
-    context.registerForViewModels(uniqueBuilderType,
-        notifierValue is ChangeNotifier ? notifierValue : null);
+    context.registerForViewModels(
+      uniqueBuilderType,
+      notifierValue is ChangeNotifier ? notifierValue : null,
+    );
 
     // Add reference for component-aware lifecycle if notifier is ReactiveNotifier
     if (component.notifier is ReactiveNotifier) {
@@ -109,8 +112,10 @@ class _ReactiveBuilderState<T> extends State<ReactiveBuilder<T>> {
     // Pass the actual notifier value if it's a ViewModel
     final notifierValue = component.notifier.notifier;
     final uniqueBuilderType = 'ReactiveBuilder<$T>_$hashCode';
-    context.unregisterFromViewModels(uniqueBuilderType,
-        notifierValue is ChangeNotifier ? notifierValue : null);
+    context.unregisterFromViewModels(
+      uniqueBuilderType,
+      notifierValue is ChangeNotifier ? notifierValue : null,
+    );
 
     _noRebuildComponents.clear();
 

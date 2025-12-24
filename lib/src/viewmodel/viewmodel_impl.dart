@@ -27,7 +27,9 @@ abstract class ViewModel<T> extends ChangeNotifier
   bool get isDisposed => _disposed;
 
   // Lifecycle tracking for debugging
-  final String _instanceId = ValueKey(DateTime.now().microsecondsSinceEpoch).toString();
+  final String _instanceId = ValueKey(
+    DateTime.now().microsecondsSinceEpoch,
+  ).toString();
   DateTime? _initTime;
   int _updateCount = 0;
 

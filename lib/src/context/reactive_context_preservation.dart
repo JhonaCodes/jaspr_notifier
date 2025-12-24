@@ -76,7 +76,10 @@ class _PreservationRegistry {
 
   /// Preserve multiple components with batch operation
   @protected
-  static List<Component> preserveAll(List<Component> components, [String? baseKey]) {
+  static List<Component> preserveAll(
+    List<Component> components, [
+    String? baseKey,
+  ]) {
     final baseEffectiveKey =
         baseKey ?? 'batch_${DateTime.now().millisecondsSinceEpoch}';
 
@@ -114,8 +117,9 @@ class _PreservationRegistry {
     if (_preservedComponents.length < _maxCacheSize) return;
 
     final now = DateTime.now();
-    final cutoffTime =
-        now.subtract(const Duration(minutes: _cleanupIntervalMinutes));
+    final cutoffTime = now.subtract(
+      const Duration(minutes: _cleanupIntervalMinutes),
+    );
 
     // Remove old entries
     final keysToRemove = _lastAccessed.entries
@@ -134,8 +138,9 @@ class _PreservationRegistry {
       final sortedByAccess = _lastAccessed.entries.toList()
         ..sort((a, b) => a.value.compareTo(b.value));
 
-      final toRemove =
-          sortedByAccess.take(_maxCacheSize ~/ 2).map((e) => e.key);
+      final toRemove = sortedByAccess
+          .take(_maxCacheSize ~/ 2)
+          .map((e) => e.key);
       for (final key in toRemove) {
         _preservedComponents.remove(key);
         _componentBuildCounts.remove(key);
@@ -144,7 +149,9 @@ class _PreservationRegistry {
     }
 
     assert(() {
-      log('[ReactiveContext] Cleaned up preservation cache. Size: ${_preservedComponents.length}');
+      log(
+        '[ReactiveContext] Cleaned up preservation cache. Size: ${_preservedComponents.length}',
+      );
       return true;
     }());
   }
@@ -157,12 +164,12 @@ class _PreservationRegistry {
       'averageBuildCount': _componentBuildCounts.values.isEmpty
           ? 0
           : _componentBuildCounts.values.reduce((a, b) => a + b) /
-              _componentBuildCounts.length,
+                _componentBuildCounts.length,
       'oldestPreservedComponent': _lastAccessed.values.isEmpty
           ? null
           : _lastAccessed.values
-              .reduce((a, b) => a.isBefore(b) ? a : b)
-              .toString(),
+                .reduce((a, b) => a.isBefore(b) ? a : b)
+                .toString(),
       'cacheUtilization':
           '${((_preservedComponents.length / _maxCacheSize) * 100).toStringAsFixed(1)}%',
     };
@@ -192,10 +199,7 @@ class _PreservationRegistry {
 class _PreservedComponent extends StatefulComponent {
   final Component child;
 
-  const _PreservedComponent({
-    super.key,
-    required this.child,
-  });
+  const _PreservedComponent({super.key, required this.child});
 
   @override
   State<_PreservedComponent> createState() => _PreservedComponentState();
@@ -213,7 +217,9 @@ class _PreservedComponentState extends State<_PreservedComponent> {
     _incrementBuildCount();
 
     assert(() {
-      log('[ReactiveContext] Preserved component initialized: ${component.key}');
+      log(
+        '[ReactiveContext] Preserved component initialized: ${component.key}',
+      );
       return true;
     }());
   }
@@ -237,7 +243,9 @@ class _PreservedComponentState extends State<_PreservedComponent> {
   @override
   Component build(BuildContext context) {
     assert(() {
-      log('[ReactiveContext] Building preserved component: ${component.key} (build #$_buildCount)');
+      log(
+        '[ReactiveContext] Building preserved component: ${component.key} (build #$_buildCount)',
+      );
       return true;
     }());
 
@@ -351,7 +359,10 @@ Component preserveComponent(Component component, [String? key]) {
 ///
 /// This function allows for batch preservation of multiple components with
 /// automatic key management and optimization.
-List<Component> preserveComponents(List<Component> components, [String? baseKey]) {
+List<Component> preserveComponents(
+  List<Component> components, [
+  String? baseKey,
+]) {
   return _PreservationRegistry.preserveAll(components, baseKey);
 }
 

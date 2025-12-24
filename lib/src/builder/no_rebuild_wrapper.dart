@@ -24,7 +24,9 @@ class NoRebuildWrapperState extends State<NoRebuildWrapper> {
   void didUpdateComponent(covariant NoRebuildWrapper oldComponent) {
     super.didUpdateComponent(oldComponent);
     if (oldComponent.child != component.child) {
-      log('Rebuild on keep old key: ${oldComponent.key.hashCode}  new key: ${component.key.hashCode}');
+      log(
+        'Rebuild on keep old key: ${oldComponent.key.hashCode}  new key: ${component.key.hashCode}',
+      );
       // Warning: this breaks the "no rebuild" contract but is safer.
       _child = component.child;
     }

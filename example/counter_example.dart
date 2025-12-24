@@ -7,10 +7,7 @@ class CounterState {
   final int count;
   final String message;
 
-  CounterState({
-    required this.count,
-    required this.message,
-  });
+  CounterState({required this.count, required this.message});
 
   String get displayMessage {
     if (count == 0) return 'Start counting!';
@@ -25,17 +22,14 @@ class CounterState {
 mixin CounterService {
   static final ReactiveNotifier<CounterState> instance =
       ReactiveNotifier<CounterState>(
-    () => CounterState(count: 0, message: 'Start counting!'),
-  );
+        () => CounterState(count: 0, message: 'Start counting!'),
+      );
 
   static void increment() {
     final current = instance.notifier;
     final newCount = current.count + 1;
     instance.updateState(
-      CounterState(
-        count: newCount,
-        message: 'Incremented to $newCount',
-      ),
+      CounterState(count: newCount, message: 'Incremented to $newCount'),
     );
   }
 
@@ -43,20 +37,12 @@ mixin CounterService {
     final current = instance.notifier;
     final newCount = current.count - 1;
     instance.updateState(
-      CounterState(
-        count: newCount,
-        message: 'Decremented to $newCount',
-      ),
+      CounterState(count: newCount, message: 'Decremented to $newCount'),
     );
   }
 
   static void reset() {
-    instance.updateState(
-      CounterState(
-        count: 0,
-        message: 'Counter reset!',
-      ),
-    );
+    instance.updateState(CounterState(count: 0, message: 'Counter reset!'));
   }
 }
 
@@ -72,22 +58,17 @@ class CounterExample extends StatelessComponent {
           div(classes: 'counter-display', [
             Component.text('Count: ${state.count}'),
           ]),
-          div(classes: 'message', [
-            Component.text(state.displayMessage),
-          ]),
+          div(classes: 'message', [Component.text(state.displayMessage)]),
           div(classes: 'button-group', [
-            button(
-              onClick: () => CounterService.decrement(),
-              [Component.text('-')],
-            ),
-            button(
-              onClick: () => CounterService.reset(),
-              [Component.text('Reset')],
-            ),
-            button(
-              onClick: () => CounterService.increment(),
-              [Component.text('+')],
-            ),
+            button(onClick: () => CounterService.decrement(), [
+              Component.text('-'),
+            ]),
+            button(onClick: () => CounterService.reset(), [
+              Component.text('Reset'),
+            ]),
+            button(onClick: () => CounterService.increment(), [
+              Component.text('+'),
+            ]),
           ]),
         ]);
       },
@@ -101,9 +82,7 @@ class App extends StatelessComponent {
   Component build(BuildContext context) {
     return Document(
       title: 'Jaspr Notifier Example',
-      head: [
-        link(rel: 'stylesheet', href: 'styles.css'),
-      ],
+      head: [link(rel: 'stylesheet', href: 'styles.css')],
       body: CounterExample(),
     );
   }

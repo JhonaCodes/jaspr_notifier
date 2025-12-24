@@ -90,7 +90,9 @@ class ReactiveContextEnhanced {
         final elementsForNotifier = _markNeedsBuildElements[notifier];
         if (elementsForNotifier != null) {
           assert(() {
-            log('[ReactiveContext] Rebuilding ${elementsForNotifier.length} elements for notifier $notifier');
+            log(
+              '[ReactiveContext] Rebuilding ${elementsForNotifier.length} elements for notifier $notifier',
+            );
             return true;
           }());
 
@@ -134,8 +136,8 @@ class ReactiveContextEnhanced {
   static Map<String, dynamic> getEnhancedDebugStatistics() {
     return {
       'notifierSpecificElements': _markNeedsBuildElements.map(
-          (notifier, elements) =>
-              MapEntry(notifier.toString(), elements.length)),
+        (notifier, elements) => MapEntry(notifier.toString(), elements.length),
+      ),
       'globalListenersSetup': _globalListenersSetup.length,
       'registeredNotifierTypes': ReactiveContextRegistry.registeredTypes.length,
       'totalActiveElements': _markNeedsBuildElements.values
@@ -199,7 +201,10 @@ class ReactiveContextBuilder extends StatelessComponent {
   }
 
   @protected
-  Component _createInheritedComponent(ReactiveNotifier notifier, Component child) {
+  Component _createInheritedComponent(
+    ReactiveNotifier notifier,
+    Component child,
+  ) {
     return ReactiveInheritedContext(
       notifier: notifier,
       contextType: notifier.notifier.runtimeType,
@@ -216,6 +221,8 @@ class ReactiveContextBuilder extends StatelessComponent {
 /// @protected - Internal function, use extensions instead
 @protected
 T getReactiveStateEnhanced<T>(
-    BuildContext context, ReactiveNotifier<T> notifier) {
+  BuildContext context,
+  ReactiveNotifier<T> notifier,
+) {
   return ReactiveContextEnhanced.getReactiveState<T>(context, notifier);
 }

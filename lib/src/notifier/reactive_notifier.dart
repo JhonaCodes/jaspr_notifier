@@ -51,9 +51,12 @@ class ReactiveNotifier<T> extends NotifierImpl<T> {
   bool _isRecreating = false;
 
   ReactiveNotifier._(
-      T Function() create, this.related, this.keyNotifier, this.autoDispose)
-      : _createFunction = create,
-        super(create()) {
+    T Function() create,
+    this.related,
+    this.keyNotifier,
+    this.autoDispose,
+  ) : _createFunction = create,
+      super(create()) {
     if (related != null) {
       assert(() {
         log('''
@@ -66,8 +69,10 @@ class ReactiveNotifier<T> extends NotifierImpl<T> {
       related?.forEach((child) {
         child._parents.add(this);
         assert(() {
-          log('➕ Added parent-child relation: $T -> ${child.notifier.runtimeType}',
-              level: 10);
+          log(
+            '➕ Added parent-child relation: $T -> ${child.notifier.runtimeType}',
+            level: 10,
+          );
           return true;
         }());
       });
@@ -80,8 +85,12 @@ class ReactiveNotifier<T> extends NotifierImpl<T> {
   /// - [create]: Function that creates the initial state
   /// - [related]: Optional list of related states
   /// - [key]: Optional key for instance identity
-  factory ReactiveNotifier(T Function() create,
-      {List<ReactiveNotifier>? related, Key? key, bool autoDispose = false}) {
+  factory ReactiveNotifier(
+    T Function() create, {
+    List<ReactiveNotifier>? related,
+    Key? key,
+    bool autoDispose = false,
+  }) {
     key ??= UniqueKey();
 
     assert(() {
@@ -144,8 +153,10 @@ Location: $trace
       // Check for possible notification overflow
       _checkNotificationOverflow();
 
-      log('📝 Updating state for $T: $notifier -> ${newState.runtimeType}',
-          level: 10);
+      log(
+        '📝 Updating state for $T: $notifier -> ${newState.runtimeType}',
+        level: 10,
+      );
 
       _updatingNotifiers.add(this);
 
@@ -181,8 +192,10 @@ Location: $trace
       // Check for possible notification overflow
       _checkNotificationOverflow();
 
-      log('📝 Updating state silently for $T: $notifier -> ${newState.runtimeType}',
-          level: 10);
+      log(
+        '📝 Updating state silently for $T: $notifier -> ${newState.runtimeType}',
+        level: 10,
+      );
 
       _updatingNotifiers.add(this);
 
@@ -492,8 +505,10 @@ ${_formatNotifierInfo(child)}
   /// Gets a related state by type
   R from<R>([Key? key]) {
     assert(() {
-      log('🔍 Getting related state of type $R from $T${key != null ? ' with key: $key' : ''}',
-          level: 10);
+      log(
+        '🔍 Getting related state of type $R from $T${key != null ? ' with key: $key' : ''}',
+        level: 10,
+      );
       return true;
     }());
 
@@ -989,9 +1004,14 @@ Location of cleanup request: $trace
     // Check if it has parents (notifiers referencing it) (unless force cleanup)
     if (_parents.isNotEmpty && !forceCleanup) {
       assert(() {
-        final parentInfo = _parents.map((parent) => '''
+        final parentInfo = _parents
+            .map(
+              (parent) =>
+                  '''
    - ${parent.notifier.runtimeType} (${parent.keyNotifier})
-     ${_getParentLocationInfo(parent)}''').join('\n');
+     ${_getParentLocationInfo(parent)}''',
+            )
+            .join('\n');
 
         final trace = StackTrace.current.toString().split('\n')[1];
         log('''
@@ -1092,11 +1112,12 @@ ${_getLocationInfo()}
     return true;
   }
 
-// Helper method to get location information for a parent
+  // Helper method to get location information for a parent
   String _getParentLocationInfo(ReactiveNotifier parent) {
     try {
-      final framePattern =
-          RegExp(r'#\d+\s+([^(]+)\(([^:]+):(\d+)(?::(\d+))?\)');
+      final framePattern = RegExp(
+        r'#\d+\s+([^(]+)\(([^:]+):(\d+)(?::(\d+))?\)',
+      );
       final frames = StackTrace.current.toString().split('\n');
 
       for (final frame in frames) {
@@ -1591,8 +1612,10 @@ Current ViewModels: ${_instances.length}
           } catch (e) {
             // Silently ignore if method doesn't exist or fails - happens for ViewModel<T> which don't have this method
             assert(() {
-              log('Note: Could not reinitialize ViewModel ${notifier.runtimeType}: $e',
-                  level: 10);
+              log(
+                'Note: Could not reinitialize ViewModel ${notifier.runtimeType}: $e',
+                level: 10,
+              );
               return true;
             }());
           }

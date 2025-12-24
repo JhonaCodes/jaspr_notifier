@@ -29,7 +29,8 @@ class ReactiveStreamBuilder<VM, T> extends StatefulComponent {
     /// Function to prevent unnecessary component rebuilds.
     /// Wrap stable child components with this to preserve identity across builds.
     Component Function(Component child) keep,
-  ) onData;
+  )
+  onData;
   final Component Function()? onLoading;
   final Component Function(Object error)? onError;
   final Component Function()? onEmpty;
@@ -109,9 +110,12 @@ class _ReactiveStreamBuilderState<VM, T>
   Component build(BuildContext context) {
     final result = _state.when(
       initial: () => component.onEmpty?.call(),
-      loading: () => component.onLoading?.call() ?? Component.text('Loading...'),
-      data: (data) => component.onData(data, (component.notifier as VM), _noRebuild),
-      error: (error) => component.onError?.call(error) ?? Component.text('Error: $error'),
+      loading: () =>
+          component.onLoading?.call() ?? Component.text('Loading...'),
+      data: (data) =>
+          component.onData(data, (component.notifier as VM), _noRebuild),
+      error: (error) =>
+          component.onError?.call(error) ?? Component.text('Error: $error'),
       done: () => component.onDone?.call(),
     );
 

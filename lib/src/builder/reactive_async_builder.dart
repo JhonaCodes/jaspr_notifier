@@ -29,7 +29,11 @@ class ReactiveAsyncBuilder<VM, T> extends StatefulComponent {
   /// }
   /// ```
   final Component Function(
-      T data, VM viewmodel, Component Function(Component child) keep) onData;
+    T data,
+    VM viewmodel,
+    Component Function(Component child) keep,
+  )
+  onData;
   final Component Function()? onLoading;
   final Component Function(Object? error, StackTrace? stackTrace)? onError;
   final Component Function()? onInitial;
@@ -167,7 +171,8 @@ class _ReactiveAsyncBuilderState<VM, T>
 
     return component.notifier.when(
       initial: () => component.onInitial?.call() ?? div([]),
-      loading: () => component.onLoading?.call() ?? Component.text('Loading...'),
+      loading: () =>
+          component.onLoading?.call() ?? Component.text('Loading...'),
       success: (data) =>
           component.onData(data, (component.notifier as VM), _noRebuild),
       error: (error, stackTrace) => component.onError != null
@@ -215,7 +220,8 @@ class ReactiveFutureBuilder<T> extends StatefulComponent {
 
   /// Builder function for rendering the UI when the Future completes successfully.
   /// Receives the data of type T from the Future and a keep function to prevent rebuilds.
-  final Component Function(T data, Component Function(Component child) keep) onData;
+  final Component Function(T data, Component Function(Component child) keep)
+  onData;
 
   /// Optional builder function for the loading state.
   /// If not provided, a default loading text will be shown.
@@ -232,7 +238,7 @@ class ReactiveFutureBuilder<T> extends StatefulComponent {
   /// Optional ReactiveNotifier that will be updated with the data from the Future.
   /// This allows other components to react to data changes.
   final ReactiveNotifier<T>?
-      createStateNotifier; // Not sure if we need for AsyncViewmodelImpl, maybe just use ReactiveNotifier
+  createStateNotifier; // Not sure if we need for AsyncViewmodelImpl, maybe just use ReactiveNotifier
 
   /// Controls whether state updates should trigger UI rebuilds.
   /// - If true, updates will notify listeners and trigger rebuilds.
@@ -299,27 +305,29 @@ class _ReactiveFutureBuilderState<T> extends State<ReactiveFutureBuilder<T>> {
       _isLoading = true;
     }
 
-    component.future.then((value) {
-      if (mounted) {
-        setState(() {
-          _data = value;
-          _isLoading = false;
-          _error = null;
-          _stackTrace = null;
-          _hasInitialized = true;
+    component.future
+        .then((value) {
+          if (mounted) {
+            setState(() {
+              _data = value;
+              _isLoading = false;
+              _error = null;
+              _stackTrace = null;
+              _hasInitialized = true;
+            });
+            _onCreateNotify(value);
+          }
+        })
+        .catchError((error, stackTrace) {
+          if (mounted) {
+            setState(() {
+              _error = error;
+              _stackTrace = stackTrace;
+              _isLoading = false;
+              _hasInitialized = true;
+            });
+          }
         });
-        _onCreateNotify(value);
-      }
-    }).catchError((error, stackTrace) {
-      if (mounted) {
-        setState(() {
-          _error = error;
-          _stackTrace = stackTrace;
-          _isLoading = false;
-          _hasInitialized = true;
-        });
-      }
-    });
   }
 
   /// Updates the ReactiveNotifier with new data.

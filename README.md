@@ -9,7 +9,7 @@ jaspr_notifier brings powerful, singleton-based state management to Jaspr web ap
 
 ## Features
 
-- **Singleton Pattern** - Create once, reuse always. No Provider overhead
+- **Singleton Pattern** - Create once, reuse always.
 - **MVVM Architecture** - Clean separation with ViewModel and AsyncViewModelImpl
 - **Automatic Context** - BuildContext available in ViewModels automatically
 - **Reactive Builders** - Efficient rebuilds with ReactiveBuilder, ReactiveViewModelBuilder, ReactiveAsyncBuilder
@@ -368,18 +368,6 @@ See the [example](example/) directory for:
 - **counter_example.dart** - Basic counter with increment/decrement
 - More examples coming soon
 
-## Comparison with Other Solutions
-
-| Feature | jaspr_notifier | jaspr_riverpod | Jaspr Native (ChangeNotifier) |
-|---------|---------------|---------------|-------------------------------|
-| Singleton Pattern | ✅ | ❌ (Provider-based) | ❌ (Manual) |
-| MVVM Architecture | ✅ | ❌ | ❌ |
-| Async ViewModels | ✅ | ✅ | ❌ |
-| Auto Context | ✅ | ❌ | ❌ |
-| Boilerplate | Minimal | Medium | High |
-| Learning Curve | Easy | Medium | Easy |
-| Type Safety | ✅ | ✅ | ✅ |
-
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
@@ -390,12 +378,12 @@ MIT License - see LICENSE file for details
 
 ## Credits
 
-jaspr_notifier is a direct port of [reactive_notifier](https://pub.dev/packages/reactive_notifier) by the same author, adapted specifically for the Jaspr framework.
+jaspr_notifier is a direct port of [reactive_notifier](https://pub.dev/packages/reactive_notifier) by @Jhonacodes, adapted specifically for the Jaspr framework.
 
 ## Links
 
 - [Documentation](https://pub.dev/documentation/jaspr_notifier/latest/)
 - [Pub.dev](https://pub.dev/packages/jaspr_notifier)
-- [GitHub](https://github.com/yourusername/jaspr_notifier)
+- [GitHub](https://github.com/JhonaCodes/jaspr_notifier)
 - [Jaspr Framework](https://github.com/schultek/jaspr)
 - [reactive_notifier (Flutter)](https://pub.dev/packages/reactive_notifier)
